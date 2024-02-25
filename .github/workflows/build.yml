@@ -1,28 +1,17 @@
-name: Example Workflow
+name: Bash Script Workflow
 on:
   push:
     branches:
       - main
+      - development
 
 jobs:
-  build:
+  run_bash_script:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Check status before commit
-        run: git status
-      - name: Create local changes
-        run: |
-          echo "Some content" > example.txt
-      - name: Commit files
-        run: |
-          git config --local user.email "therapstar75@gmail.com"
-          git config --local user.name "Nakasz"
-          git add .
-          git commit -m "Change"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Run Bash script
+        run: bash start.sh
 
